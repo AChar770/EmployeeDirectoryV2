@@ -19,3 +19,13 @@ export function newEmployee(name) {
   employees.push(employee)
   return employee;
 }
+
+export function getEmployeeById(id) {
+  for (let i = 0; i < employees.length; i++) {
+    if (employees[i].id === id) {
+      return employees[i];
+    }
+  }
+  return {Employee};
+}
+

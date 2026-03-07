@@ -1,5 +1,6 @@
 import express from "express";
-import employees from "#db/employees";
+import employees, { newEmployee } from "#db/employees";
+
 
 const empRouter = express.Router();
 
@@ -14,9 +15,17 @@ empRouter.get("/random", (req, res) => {
   res.send(employees[randomIndex]);
 });
 
-empRouter.get("/employees/:id", (req, res) => {
-  const { id } = req.params;
-});
+empRouter.get("/:id", (req, res) => {
+  const id = Number (req.params.id);
+ 
+  for(let i = 0; i <employees.length; i++) {
+    if (employees[i].id ===id){
+      return res.send(employees[i]);
+    }
+  }
+
+res.status(404).send("Employee not found");
+ });
 
 empRouter.post("/", (req, res) => {
   if (!req.body) return res.status(400).send("Req body is required.");
@@ -24,6 +33,6 @@ empRouter.post("/", (req, res) => {
   const { name } = req.body;
   if (!name) return res.status(400).send("Name is required.");
 
-  const employee = addEmployee(name);
+  const employee = newEmployee(name);
   res.status(201).send(employee);
 });
