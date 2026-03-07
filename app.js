@@ -1,4 +1,6 @@
 import express from "express";
+import empRouter from "#router/employees";
+
 const app = express();
 export default app;
 
@@ -8,9 +10,7 @@ app.get("/", (req, res) => {
   res.send("Hello employees!");
 });
 
-app.get("/employees", (req, res) => {
-  res.send(employees);
-});
+app.use("/employees", empRouter);
 
 // Note: this middleware has to come first! Otherwise, Express will treat
 // "random" as the argument to the `id` parameter of /employees/:id.
@@ -32,3 +32,7 @@ app.get("/employees/:id", (req, res) => {
 
   res.send(employee);
 });
+
+app.use((err, req, res, next) => {
+  res.status(500).send("error")
+})
