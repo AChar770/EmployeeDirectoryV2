@@ -12,14 +12,7 @@ app.get("/", (req, res) => {
 
 app.use("/employees", empRouter);
 
-// Note: this middleware has to come first! Otherwise, Express will treat
-// "random" as the argument to the `id` parameter of /employees/:id.
-app.get("/employees/random", (req, res) => {
-  const randomIndex = Math.floor(Math.random() * employees.length);
-  res.send(employees[randomIndex]);
-});
-
-app.get("/employees/:id", (req, res) => {
+app.use("/employees/:id", (req, res) => {
   const { id } = req.params;
 
   // req.params are always strings, so we need to convert `id` into a number
@@ -34,5 +27,5 @@ app.get("/employees/:id", (req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  res.status(500).send("error")
-})
+  res.status(500).send("error");
+});

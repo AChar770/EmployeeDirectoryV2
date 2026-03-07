@@ -14,4 +14,5 @@ empRouter.get("/random", (req, res) => {
   res.send(employees[randomIndex]);
 });
 
-
+empRouter.get("/employees/:id",(req, res) => {
+  const { id } = req.params;})
